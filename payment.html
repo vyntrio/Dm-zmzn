@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --primary: #2196F3;
+            --primary-hover: #0d8bf2;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .payment-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        .qr-code {
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+            border: 1px solid #444;
+            border-radius: 10px;
+        }
+        .form-control {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            color: white;
+        }
+        .submit-btn {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .amount-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-container">
+            <h2 class="text-center mb-4">Complete Payment</h2>
+            
+            <div class="amount-display">
+                Amount to Pay: ₹<span id="amountDisplay"></span>
+            </div>
+            
+            <div class="alert alert-dark">
+                Please scan the QR code below and enter your UTR number after payment
+            </div>
+            
+            <img src="https://i.postimg.cc/rF9qSjp7/IMG-20250711-220002.jpg" class="qr-code" alt="Payment QR Code">
+            
+            <form id="paymentForm">
+                <div class="mb-3">
+                    <label for="utr" class="form-label">UTR Number</label>
+                    <input type="text" class="form-control" id="utr" required>
+                </div>
+                <button type="submit" class="btn submit-btn">SUBMIT PAYMENT</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const amount = sessionStorage.getItem('paymentAmount') || '550';
+            document.getElementById('amountDisplay').textContent = amount;
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const utr = document.getElementById('utr').value;
+            sessionStorage.setItem('paymentUTR', utr);
+            window.location.href = 'confirm.html';
+        });
+    </script>
+</body>
+</html>
